@@ -16,28 +16,28 @@ import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-public class Main {
+public class CopyOfMain {
 
 	
 	public static void main(String[] args)
 	{
-		ArrayList<String> dictlines = Main.readFile("data/chindict", 130);
+		ArrayList<String> dictlines = CopyOfMain.readFile("data/chindict", 130);
 		for (int i=0;i<dictlines.size();i++)
 		{
 			String tempstring = dictlines.get(i);
 			dictlines.remove(i);
 			dictlines.add(i, tempstring + " ");
 		}
-		ArrayList<String> spandoc = Main.readFile("data/chinparagraph", 10);
+		ArrayList<String> spandoc = CopyOfMain.readFile("data/chinparagraph", 10);
 		
-		ArrayList<String> englishsents = Main.doInitialTranslation(dictlines, spandoc);
+		ArrayList<String> englishsents = CopyOfMain.doInitialTranslation(dictlines, spandoc);
 		
-		Main.writefile(englishsents, "data/englishsentencedoc");
-		ArrayList<ArrayList<TaggedWord>> taggedsentences = Main.tag("data/englishsentencedoc");
+		CopyOfMain.writefile(englishsents, "data/englishsentencedoc");
+		ArrayList<ArrayList<TaggedWord>> taggedsentences = CopyOfMain.tag("data/englishsentencedoc");
 		
 		System.out.println();
 		
-		Main.handletaggedsentences(taggedsentences);
+		CopyOfMain.handletaggedsentences(taggedsentences);
 	}
 	
 	public static void handletaggedsentences(ArrayList<ArrayList<TaggedWord>> taggedsentences)

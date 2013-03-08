@@ -184,7 +184,7 @@ public class Main {
 						
 						if (iscomma==true)
 							englishword+=",";
-						if (isquotebeginning=false)
+						if (isquotebeginning==true)
 							englishword= "\"" + englishword;
 						if (isquoteend==true)
 							englishword+="\"";

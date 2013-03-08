@@ -1,0 +1,6 @@
+Los sistemas de traducción actuales permiten establecer parámetros (por ejemplo, limitando el rango de sustituciones permitidas) de acuerdo con el dominio o la profesión en la que se hace la traducción, lo que efectivamente mejora el resultado.
+Esta técnica es particularmente útil en campos donde se emplea un lenguaje formal o basado en formularios, como los reportes del tiempo y los documentos legales o administrativos, pero su uso no es viable en la traducción de conversaciones u otros textos menos estandarizados.
+En las últimas décadas ha habido un fuerte impulso en el uso de técnicas estadísticas para el desarrollo de sistemas de traducción automática.
+Para la aplicación de estas técnicas a un par de lenguas dado, se requiere la disponibilidad de un corpus paralelo para dicho par.
+Mediante este corpus se estiman parámetros de sendos modelos estadísticos que establecen la probabilidad con la que ciertas palabras son susceptibles de traducirse por otras, así como las posiciones más probables que tienden a ocupar las palabras de la lengua destino en función de las palabras correspondientes de la frase origen.
+El atractivo de estas técnicas radica en que el desarrollo de un sistema para un par de lenguas dado puede hacerse de manera muy automática, con una muy reducida necesidad de trabajo experto por parte de especialistas en lingüística.

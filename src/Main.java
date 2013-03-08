@@ -147,6 +147,14 @@ public class Main {
 					iscomma=true;
 				}
 				
+				boolean issemicolon=false;
+				if (word.contains(";"))
+				{
+					word = word.replace(";", "");
+					issemicolon=true;
+				}
+				
+				
 				boolean isquotebeginning=false;
 				boolean isquoteend=false;
 				if (word.contains("\""))
@@ -154,12 +162,12 @@ public class Main {
 					if (word.charAt(0)==('\"'))
 					{
 						isquotebeginning=true;
-						word.replace("\"", "");
+						word = word.replace("\"", "");
 					}
 					if (word.charAt(word.length()-1)==('\"'))
 					{
 						isquoteend=true;
-						word.replace("\"", "");
+						word = word.replace("\"", "");
 					}					
 				}
 				
@@ -180,6 +188,8 @@ public class Main {
 							englishword= "\"" + englishword;
 						if (isquoteend==true)
 							englishword+="\"";
+						if (issemicolon==true)
+							englishword+=";";
 							
 						candidatedictlines.add(englishword);
 					}

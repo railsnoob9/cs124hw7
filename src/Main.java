@@ -48,7 +48,27 @@ public class Main {
 		{
 			for (int i=0;i<sentence.size();i++)
 			{
-
+//				//rule 1: DT NN DT --> DT NN
+//				if (i<sentence.size()-2)
+//				{
+//					if (sentence.get(i).tag().equals("DT") && sentence.get(i+1).tag().equals("NN")
+//							&& sentence.get(i+2).tag().equals("DT"))
+//					{
+//						sentence.remove(i + 2);
+//					}	
+//				}
+//				
+//				//rule 2: JJ NN --> NN JJ
+//				if (i>0)
+//				{
+//					if (sentence.get(i).tag().equals("JJ") && sentence.get(i-1).tag().equals("NN"))
+//					{
+//						TaggedWord temptagged2 = sentence.get(i);
+//						
+//						sentence.remove(i);
+//						sentence.add(i-1, temptagged2);
+//					}
+//				}
 
 				
 				

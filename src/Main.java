@@ -211,7 +211,7 @@ public class Main {
     		  FileInputStream fstream = new FileInputStream(filename);
     		  // Get the object of DataInputStream
     		  DataInputStream in = new DataInputStream(fstream);
-    		  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    		  BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
     		  String strLine;
     		  //Read File Line By Line
     		  while ((strLine = br.readLine()) != null)   {

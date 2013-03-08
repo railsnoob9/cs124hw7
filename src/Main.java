@@ -21,14 +21,14 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
-		ArrayList<String> dictlines = Main.readFile("data/chindict", 130);
+		ArrayList<String> dictlines = Main.readFile("data/spandict", 130);
 		for (int i=0;i<dictlines.size();i++)
 		{
 			String tempstring = dictlines.get(i);
 			dictlines.remove(i);
 			dictlines.add(i, tempstring + " ");
 		}
-		ArrayList<String> spandoc = Main.readFile("data/chinparagraph", 10);
+		ArrayList<String> spandoc = Main.readFile("data/spanparagraph", 10);
 		
 		ArrayList<String> englishsents = Main.doInitialTranslation(dictlines, spandoc);
 		
@@ -43,52 +43,48 @@ public class Main {
 	public static void handletaggedsentences(ArrayList<ArrayList<TaggedWord>> taggedsentences)
 	{
 		
-		//rule 7: if a noun follows a plural demonstrative adjective (these or those)
+		//rule 1: DT NN DT --> DT NN
+		//for stuff like: "this <noun> this is" is redundant--i.e. two subjects before the verb
+		//this/DT technique/NN this/DT is/VBZ --> determiner noun determiner verb
+		//so if two determiners surround a noun, get rid of the second
+		//this transforms "this car this is..." into "this car is" 
+		
+		//rule 2: JJ NN --> NN JJ
+		//language/NN formal/JJ swap adj and noun (the obvious rule--of course in spanish this is swapped occasionally)
+		
+		//rule 3: VBZ VBN DT JJ NN --> DT JJ NN VBZ VBN
+
+		//ex.
+		//has/VBZ, been/VBN, a/DT, strong/JJ, momentum/NN,
+		//is/VBZ, used/VBN, a/DT, formal/JJ, language/NN
 		
 		for (ArrayList<TaggedWord> sentence : taggedsentences)
 		{
 			for (int i=0;i<sentence.size();i++)
 			{
 				
-				
-				
-				//adv adj
-				if (i>0)
+				//rule 1: DT NN DT --> DT NN
+				if (i<sentence.size()-2)
 				{
-					//often/RB, become/VBN, robbery/NN, ,/,, sexual/JJ, harassment/NN, and/CC, other/JJ, violence/NN, behavior/NN, of/IN, victim/NN
-					if (sentence.get(i-1).tag().equals("IN")&& sentence.get(i-1).word().equals("of")&& sentence.get(i).tag().equals("NN"))
+					if (sentence.get(i).tag().equals("DT") && sentence.get(i+1).tag().equals("NN")
+							&& sentence.get(i+2).tag().equals("DT"))
 					{
-						String word1 = sentence.get(i-1).word();
-						String word2 = sentence.get(i).word();
-						
-						int a=1;
-					}
-					
+						sentence.remove(i + 2);
+					}	
 				}
 				
-//				//rule 1: DT NN DT --> DT NN
-//				if (i<sentence.size()-2)
-//				{
-//					if (sentence.get(i).tag().equals("DT") && sentence.get(i+1).tag().equals("NN")
-//							&& sentence.get(i+2).tag().equals("DT"))
-//					{
-//						sentence.remove(i + 2);
-//					}	
-//				}
-//				
-//				//rule 2: JJ NN --> NN JJ
-//				if (i>0)
-//				{
-//					if (sentence.get(i).tag().equals("JJ") && sentence.get(i-1).tag().equals("NN"))
-//					{
-//						TaggedWord temptagged2 = sentence.get(i);
-//						
-//						sentence.remove(i);
-//						sentence.add(i-1, temptagged2);
-//					}
-//				}
+				//rule 2: JJ NN --> NN JJ
+				if (i>0)
+				{
+					if (sentence.get(i).tag().equals("JJ") && sentence.get(i-1).tag().equals("NN"))
+					{
+						TaggedWord temptagged2 = sentence.get(i);
+						
+						sentence.remove(i);
+						sentence.add(i-1, temptagged2);
+					}
+				}
 
-				
 				
 			}
 
@@ -102,7 +98,39 @@ public class Main {
 		{
 			for (int i=0;i<sentence.size();i++)
 			{
-		
+				//rule 3: VBZ VBN DT JJ NN --> DT JJ NN VBZ VBN
+				if (i>3)
+				{
+					//has/VBZ, been/VBN, a/DT, strong/JJ, momentum/NN,
+					//is/VBZ, used/VBN, a/DT, formal/JJ, language/NN
+					//is/VBZ, led/VBN, to/TO, the/DT, children/NNS????
+					if (sentence.get(i).tag().equals("NN") && sentence.get(i-1).tag().equals("JJ")
+							&& sentence.get(i-2).tag().equals("DT") && sentence.get(i-3).tag().equals("VBN")
+							&& sentence.get(i-4).tag().equals("VBZ"))
+					{
+						
+						TaggedWord temptaggedvbz = sentence.get(i-4);
+						TaggedWord temptaggedvbn = sentence.get(i-3);
+						
+						sentence.remove(i-3);
+						sentence.remove(i-4);
+						
+						sentence.add(i-1, temptaggedvbz);
+						sentence.add(i,temptaggedvbn);
+						
+						
+						
+//						String word1 = sentence.get(i-1).word();
+//						String word2 = sentence.get(i).word();
+						//int a=1;
+						
+		//				TaggedWord temptagged2 = sentence.get(i);
+		//				
+		//				sentence.remove(i);
+		//				sentence.add(i-1, temptagged2);
+					}
+					
+				}
 
 				
 				
